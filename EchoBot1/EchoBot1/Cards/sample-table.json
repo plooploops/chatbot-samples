@@ -1,0 +1,232 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "ID"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "1234567"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "12345678"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "123456789"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "1234567890"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "12345678901"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "123456789012"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Status"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Done"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "In Progress"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Not Started"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Done"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "Done"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "In Progress"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Amount"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "123.45"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "1234.56"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "12345.67"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "123456.78"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "1234567.89"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "12345678.90"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Date"
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "1-JAN-11"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "2-FEB-12"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "3-MAR-13"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "4-APR-14"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "5-MAY-15"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "26-JUN-16"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
