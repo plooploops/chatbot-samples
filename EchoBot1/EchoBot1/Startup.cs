@@ -174,6 +174,8 @@ namespace EchoBot1
 
                 // Locale Middleware (sets UI culture based on Activity.Locale)
                 options.Middleware.Add(new SetLocaleMiddleware("en-us"));
+                // show typing
+                options.Middleware.Add(new ShowTypingMiddleware());
             });
 
             services.AddSingleton<BotUserStateAccessors>(sp =>
