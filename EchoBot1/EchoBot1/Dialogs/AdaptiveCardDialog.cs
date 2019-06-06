@@ -52,6 +52,7 @@ namespace EchoBot1.Dialogs
                         {
                             //https://stackoverflow.com/questions/53009106/adaptive-card-response-from-a-waterfallstep-dialog-ms-bot-framework-v4
                             var userAnswer = (string) stepContext.Result;
+                            await stepContext.Context.SendActivityAsync(userAnswer);
 
                             return await stepContext.NextAsync().ConfigureAwait(false);
                         }
