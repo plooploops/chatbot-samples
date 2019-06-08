@@ -1,14 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-using System;
-using System.IO;
-using System.Linq;
-using EchoBot1.Bootstrap;
-using EchoBot1.Dialogs;
+﻿using EchoBot1.Dialogs;
 using EchoBot1.Middleware;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Integration;
@@ -17,54 +8,25 @@ using Microsoft.Bot.Configuration;
 using Microsoft.Bot.Connector.Authentication;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace EchoBot1
+namespace EchoBot1.Bootstrap
 {
-    /// <summary>
-    /// The Startup class configures services and the request pipeline.
-    /// </summary>
-    public class Startup
+    public static class BootstrapBot
     {
-        private ILoggerFactory _loggerFactory;
-        private readonly bool _isProduction;
-
-        public Startup(IHostingEnvironment env)
+        public static void AddConfiguredBot(this IServiceCollection services, IConfiguration configuration, ILoggerFactory loggerFactory, bool _isProduction)
         {
-            _isProduction = env.IsProduction();
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+            var secretKey = configuration.GetSection("botFileSecret")?.Value;
+            var botFilePath = configuration.GetSection("botFilePath")?.Value;
 
-            Configuration = builder.Build();
-        }
-
-        /// <summary>
-        /// Gets the configuration that represents a set of key/value application configuration properties.
-        /// </summary>
-        /// <value>
-        /// The <see cref="IConfiguration"/> that represents a set of key/value application configuration properties.
-        /// </value>
-        public IConfiguration Configuration { get; }
-
-        /// <summary>
-        /// This method gets called by the runtime. Use this method to add services to the container.
-        /// </summary>
-        /// <param name="services">The <see cref="IServiceCollection"/> specifies the contract for a collection of service descriptors.</param>
-        /// <seealso cref="IStatePropertyAccessor{T}"/>
-        /// <seealso cref="https://docs.microsoft.com/en-us/aspnet/web-api/overview/advanced/dependency-injection"/>
-        /// <seealso cref="https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-4.0"/>
-        public void ConfigureServices(IServiceCollection services)
-        {
-            var secretKey = Configuration.GetSection("botFileSecret")?.Value;
-            var botFilePath = Configuration.GetSection("botFilePath")?.Value;
-
-            var appId = Configuration.GetSection("MicrosoftAppId").Value;
-            var appPassword = Configuration.GetSection("MicrosoftAppPassword").Value;
+            var appId = configuration.GetSection("MicrosoftAppId").Value;
+            var appPassword = configuration.GetSection("MicrosoftAppPassword").Value;
 
             if (!_isProduction)
             {
@@ -82,10 +44,10 @@ namespace EchoBot1
                 catch
                 {
                     var msg = @"Error reading bot file. Please ensure you have valid botFilePath and botFileSecret set for your environment.
-        - You can find the botFilePath and botFileSecret in the Azure App Service application settings.
-        - If you are running this bot locally, consider adding a appsettings.json file with botFilePath and botFileSecret.
-        - See https://aka.ms/about-bot-file to learn more about .bot file its use and bot configuration.
-        ";
+                        - You can find the botFilePath and botFileSecret in the Azure App Service application settings.
+                        - If you are running this bot locally, consider adding a appsettings.json file with botFilePath and botFileSecret.
+                        - See https://aka.ms/about-bot-file to learn more about .bot file its use and bot configuration.
+                        ";
                     throw new InvalidOperationException(msg);
                 }
 
@@ -108,31 +70,12 @@ namespace EchoBot1
                 appId = endpointService.AppId;
                 appPassword = endpointService.AppPassword;
             }
-            // Memory Storage is for local bot debugging only. When the bot
-            // is restarted, everything stored in memory will be gone.
+
             IStorage dataStore = new MemoryStorage();
 
-            // For production bots use the Azure Blob or
-            // Azure CosmosDB storage providers. For the Azure
-            // based storage providers, add the Microsoft.Bot.Builder.Azure
-            // Nuget package to your solution. That package is found at:
-            // https://www.nuget.org/packages/Microsoft.Bot.Builder.Azure/
-            // Un-comment the following lines to use Azure Blob Storage
-            // // Storage configuration name or ID from the .bot file.
-            // const string StorageConfigurationId = "<STORAGE-NAME-OR-ID-FROM-BOT-FILE>";
-            // var blobConfig = botConfig.FindServiceByNameOrId(StorageConfigurationId);
-            // if (!(blobConfig is BlobStorageService blobStorageConfig))
-            // {
-            //    throw new InvalidOperationException($"The .bot file does not contain an blob storage with name '{StorageConfigurationId}'.");
-            // }
-            // // Default container name.
-            // const string DefaultBotContainer = "<DEFAULT-CONTAINER>";
-            // var storageContainer = string.IsNullOrWhiteSpace(blobStorageConfig.Container) ? DefaultBotContainer : blobStorageConfig.Container;
-            // IStorage dataStore = new Microsoft.Bot.Builder.Azure.AzureBlobStorage(blobStorageConfig.ConnectionString, storageContainer);
-
-            // Create and add conversation state.
             var conversationState = new ConversationState(dataStore);
             services.AddSingleton(conversationState);
+
             var userState = new UserState(dataStore);
             services.AddSingleton(userState);
 
@@ -165,7 +108,7 @@ namespace EchoBot1
 
                 // Catches any errors that occur during a conversation turn and logs them to currently
                 // configured ILogger.
-                ILogger logger = _loggerFactory.CreateLogger<EchoBot1Bot>();
+                ILogger logger = loggerFactory.CreateLogger<EchoBot1Bot>();
 
                 options.OnTurnError = async (context, exception) =>
                 {
@@ -193,7 +136,7 @@ namespace EchoBot1
                 {
                     BotUserState = userState.CreateProperty<BotUserState>(BotUserStateAccessors.BotUserName),
                     DialogStateStateAccessor = conversationState.CreateProperty<DialogState>(BotUserStateAccessors.DialogStateAccessorName),
-                    Configuration = this.Configuration
+                    Configuration = configuration
                 };
 
                 return accessors;
@@ -206,18 +149,6 @@ namespace EchoBot1
                     CounterState = conversationState.CreateProperty<CounterState>(ConversationStateAccessors.CounterStateName),
                 };
             });
-
-            // to-do (clean-up services into a bootstrapper)
-            //services.AddConfiguredBot(configuration, _loggerFactory, _isProduction);
-        }
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-        {
-            _loggerFactory = loggerFactory;
-
-            app.UseDefaultFiles()
-                .UseStaticFiles()
-                .UseBotFramework();
         }
     }
 }
