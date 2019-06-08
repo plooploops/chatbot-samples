@@ -7,6 +7,8 @@ using System.Linq;
 using EchoBot1.Bootstrap;
 using EchoBot1.Dialogs;
 using EchoBot1.Middleware;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.AzureAD.UI;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Bot.Builder;
@@ -43,12 +45,6 @@ namespace EchoBot1
             Configuration = builder.Build();
         }
 
-        /// <summary>
-        /// Gets the configuration that represents a set of key/value application configuration properties.
-        /// </summary>
-        /// <value>
-        /// The <see cref="IConfiguration"/> that represents a set of key/value application configuration properties.
-        /// </value>
         public IConfiguration Configuration { get; }
 
         /// <summary>
@@ -133,6 +129,7 @@ namespace EchoBot1
             // Create and add conversation state.
             var conversationState = new ConversationState(dataStore);
             services.AddSingleton(conversationState);
+
             var userState = new UserState(dataStore);
             services.AddSingleton(userState);
 
@@ -208,7 +205,10 @@ namespace EchoBot1
             });
 
             // to-do (clean-up services into a bootstrapper)
-            //services.AddConfiguredBot(configuration, _loggerFactory, _isProduction);
+            //services.AddConfiguredBot(Configuration, _loggerFactory, _isProduction);
+
+            services.AddAuthentication(AzureADDefaults.AuthenticationScheme)
+                .AddAzureAD(options => Configuration.Bind("AzureAd", options));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
