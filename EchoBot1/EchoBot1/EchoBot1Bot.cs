@@ -42,10 +42,10 @@ namespace EchoBot1
         /// <param name="conversationState">The managed conversation state.</param>
         /// <param name="loggerFactory">A <see cref="ILoggerFactory"/> that is hooked to the Azure App Service provider.</param>
         /// <seealso cref="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/logging/?view=aspnetcore-2.1#windows-eventlog-provider"/>
-        public EchoBot1Bot(ConversationState conversationState, ILoggerFactory loggerFactory, BotUserStateAccessors statePropertyAccessor, DialogSet dialogSet)
+        public EchoBot1Bot(ConversationState conversationState, ILoggerFactory loggerFactory, ConversationStateAccessors conversationStateAccessors, BotUserStateAccessors statePropertyAccessor, DialogSet dialogSet)
         {
             _botUserStateAccessors = statePropertyAccessor ?? throw new System.ArgumentNullException("state accessor can't be null");
-
+            _accessors = conversationStateAccessors;
             if (conversationState == null)
             {
                 throw new System.ArgumentNullException(nameof(conversationState));
@@ -93,9 +93,24 @@ namespace EchoBot1
                 {
                     _logger.LogInformation("Handling a message, active dialog is: {ActiveDialogId}", dialogContext.ActiveDialog?.Id ?? "<NONE>");
 
+                    CustomWrapperPromptState customWrapperPromptState = await _accessors.CustomWrapperPromptState.GetAsync(
+                                turnContext,
+                                () => new CustomWrapperPromptState() { Submitted = new Dictionary<string, string>() },
+                                cancellationToken);
+
                     if (dialogContext.ActiveDialog != null)
                     {
-                        await dialogContext.ContinueDialogAsync(cancellationToken);
+                        if (customWrapperPromptState.Submitted.ContainsKey(turnContext.Activity.Conversation.Id) && 
+                            customWrapperPromptState.Submitted[turnContext.Activity.Conversation.Id] != turnContext.Activity.Id)
+                        {
+                            await turnContext.SendActivityAsync("Looks like that's already been submitted.");
+
+                            await dialogContext.BeginDialogAsync(MainMenuHelperDialog.MainMenuHelperDialogId, null, cancellationToken);
+                        }
+                        else
+                        {
+                            await dialogContext.ContinueDialogAsync(cancellationToken);
+                        }
                     }
                     else
                     {

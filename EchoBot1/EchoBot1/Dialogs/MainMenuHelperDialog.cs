@@ -16,12 +16,14 @@ namespace EchoBot1.Dialogs
     public class MainMenuHelperDialog : ComponentDialog
     {
         private readonly IStatePropertyAccessor<SelectedLanguageState> _selectedLanguageStatePropertyAccessor;
+        private readonly IStatePropertyAccessor<CustomWrapperPromptState> _customWrapperPromptStatePropertyAccessor;
 
         public static readonly string MainMenuHelperDialogId = "mainMenuHelperDialog";
 
-        public MainMenuHelperDialog(IStatePropertyAccessor<SelectedLanguageState> selectedLanguagePropertyAccessor) : base(MainMenuHelperDialogId)
+        public MainMenuHelperDialog(IStatePropertyAccessor<SelectedLanguageState> selectedLanguagePropertyAccessor, IStatePropertyAccessor<CustomWrapperPromptState> customWrapperPromptStateAccessor) : base(MainMenuHelperDialogId)
         {
             this._selectedLanguageStatePropertyAccessor = selectedLanguagePropertyAccessor;
+            this._customWrapperPromptStatePropertyAccessor = customWrapperPromptStateAccessor;
             this.InitialDialogId = MainMenuHelperDialogId;
 
             List<string> _mainMenuChoices = new List<string>() { "FAQ QnAMaker", "Azure Search", "Azure Search Facets", "Adaptive Card", "Choose Language" };
@@ -32,7 +34,7 @@ namespace EchoBot1.Dialogs
             this.AddDialog(new QnAMakerDialog("QnADialog"));
             this.AddDialog(new AzureSearchDialog("AzureSearchDialog", selectedLanguagePropertyAccessor));
             this.AddDialog(new AzureSearchFacetsDialog("AzureSearchFacetsDialog"));
-            this.AddDialog(new AdaptiveCardDialog("AdaptiveCardDialog"));
+            this.AddDialog(new AdaptiveCardDialog("AdaptiveCardDialog", customWrapperPromptStateAccessor));
             this.AddDialog(new ChooseLanguageDialog("ChooseLanguageDialog", selectedLanguagePropertyAccessor));
 
             // Define the conversation flow using the waterfall model.

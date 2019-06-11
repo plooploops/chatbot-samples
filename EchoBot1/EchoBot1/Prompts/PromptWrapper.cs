@@ -8,6 +8,7 @@ using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Builder.Dialogs.Choices;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EchoBot1.Prompts
 {
@@ -107,7 +108,16 @@ namespace EchoBot1.Prompts
             // Return recognized value or re-prompt
             if (isValid)
             {
-                return await dc.EndDialogAsync(recognized.Value).ConfigureAwait(false);
+                JObject channelData = (JObject)dc.Context.Activity.ChannelData;
+                //do something better here?
+                if (channelData.GetValue("postBack").Value<Boolean>())
+                {
+                    return await dc.EndDialogAsync(recognized.Value).ConfigureAwait(false);
+                }
+                else
+                {
+                    return await dc.EndDialogAsync(recognized.Value).ConfigureAwait(false);
+                }
             }
             else
             {
