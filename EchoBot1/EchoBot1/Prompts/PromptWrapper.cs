@@ -108,16 +108,7 @@ namespace EchoBot1.Prompts
             // Return recognized value or re-prompt
             if (isValid)
             {
-                JObject channelData = (JObject)dc.Context.Activity.ChannelData;
-                //do something better here?
-                if (channelData.GetValue("postBack").Value<Boolean>())
-                {
-                    return await dc.EndDialogAsync(recognized.Value).ConfigureAwait(false);
-                }
-                else
-                {
-                    return await dc.EndDialogAsync(recognized.Value).ConfigureAwait(false);
-                }
+                return await dc.EndDialogAsync(recognized.Value).ConfigureAwait(false);
             }
             else
             {
