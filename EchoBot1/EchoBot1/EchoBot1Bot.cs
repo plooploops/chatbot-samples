@@ -12,6 +12,7 @@ using Microsoft.Bot.Schema;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using Microsoft.Extensions.Localization;
+using Newtonsoft.Json.Linq;
 
 namespace EchoBot1
 {
@@ -100,8 +101,15 @@ namespace EchoBot1
 
                     if (dialogContext.ActiveDialog != null)
                     {
-                        if (customWrapperPromptState.Submitted.ContainsKey(turnContext.Activity.Conversation.Id) && 
-                            customWrapperPromptState.Submitted[turnContext.Activity.Conversation.Id] != turnContext.Activity.Id)
+                        dynamic res = turnContext.Activity.Value;
+                        string id = string.Empty;
+                        if(res != null)
+                        {
+                            id = (res as JObject).GetValue("id").ToString();
+                        }
+                        if (!string.IsNullOrEmpty(id) &&
+                            customWrapperPromptState.Submitted.ContainsKey(id) && 
+                            customWrapperPromptState.Submitted[id] != turnContext.Activity.Id)
                         {
                             await turnContext.SendActivityAsync("Looks like that's already been submitted.");
 

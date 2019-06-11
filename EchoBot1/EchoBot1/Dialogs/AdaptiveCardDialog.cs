@@ -55,6 +55,8 @@ namespace EchoBot1.Dialogs
                             //https://stackoverflow.com/questions/53009106/adaptive-card-response-from-a-waterfallstep-dialog-ms-bot-framework-v4
                             var userAnswer = (string) stepContext.Result;
 
+                            var res = JObject.Parse(userAnswer);
+
                             await stepContext.Context.SendActivityAsync(userAnswer);
 
                             CustomWrapperPromptState customWrapperPromptState = await _customWrapperPromptStatePropertyAccessor.GetAsync(
@@ -62,7 +64,7 @@ namespace EchoBot1.Dialogs
                                 () => new CustomWrapperPromptState() { Submitted = new Dictionary<string, string>() },
                                 ct);
 
-                            customWrapperPromptState.Submitted.TryAdd(stepContext.Context.Activity.Conversation.Id, stepContext.Context.Activity.Id);
+                            customWrapperPromptState.Submitted.TryAdd(res.GetValue("id").ToString(), stepContext.Context.Activity.Id);
 
                             await _customWrapperPromptStatePropertyAccessor.SetAsync(
                                 stepContext.Context,
