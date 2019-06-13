@@ -1,0 +1,132 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Application Name"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "App 123"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "App 234"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Description"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "I'm an app 123"
+            },
+            {
+              "type": "TextBlock",
+              "separator": true,
+              "text": "I'm an app 234"
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Get it"
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "Check here"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://myapp123.com"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "Check here"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://myapp234.com"
+              }
+            }
+          ]
+        },
+        {
+          "type": "Column",
+          "items": [
+            {
+              "type": "TextBlock",
+              "weight": "bolder",
+              "text": "Instructions"
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "App 123 Instructions"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            },
+            {
+              "type": "Container",
+              "items": [
+                {
+                  "type": "TextBlock",
+                  "separator": true,
+                  "text": "App 234 Instructions"
+                }
+              ],
+              "selectAction": {
+                "type": "Action.OpenUrl",
+                "title": "Action.OpenUrl",
+                "url": "http://adaptivecards.io"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
