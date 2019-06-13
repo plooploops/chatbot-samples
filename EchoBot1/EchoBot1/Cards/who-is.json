@@ -1,0 +1,48 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.0",
+  "body": [
+    {
+      "type": "TextBlock",
+      "size": "medium",
+      "weight": "bolder",
+      "text": "Who is?",
+      "horizontalAlignment": "center"
+    },
+    {
+      "type": "TextBlock",
+      "text": "First Name:"
+    },
+    {
+      "type": "Input.Text",
+      "placeholder": "First Name",
+      "style": "text",
+      "isMultiline": true,
+      "maxLength": 0,
+      "id": "FirstName"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Last Name:"
+    },
+    {
+      "type": "Input.Text",
+      "placeholder": "Last Name",
+      "style": "text",
+      "isMultiline": true,
+      "maxLength": 0,
+      "id": "LastName"
+    }
+  ],
+
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Submit",
+      "data": {
+        "id": "Submit-{0}"
+      }
+    }
+  ]
+}
