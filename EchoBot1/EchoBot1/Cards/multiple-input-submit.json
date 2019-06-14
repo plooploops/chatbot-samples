@@ -95,7 +95,7 @@
       "type": "Action.Submit",
       "title": "Submit",
       "data": {
-        "id": "Submit"
+        "id": "Submit-{0}"
       }
     }
   ]

@@ -16,9 +16,11 @@ namespace EchoBot1.Dialogs
 {
     public class AdaptiveCardDialog : ComponentDialog
     {
-        private string selectedDay { get; set; }
-        public AdaptiveCardDialog(string dialogId) : base(dialogId)
+        private readonly IStatePropertyAccessor<CustomWrapperPromptState> _customWrapperPromptStatePropertyAccessor;
+
+        public AdaptiveCardDialog(string dialogId, IStatePropertyAccessor<CustomWrapperPromptState> customWrapperPromptStatePropertyAccessor) : base(dialogId)
         {
+            this._customWrapperPromptStatePropertyAccessor = customWrapperPromptStatePropertyAccessor;
             // ID of the child dialog that should be started anytime the component is started.
             this.InitialDialogId = dialogId;
             this.AddDialog(new CustomPromptWrapper("customPromptWrapper"));
@@ -27,13 +29,13 @@ namespace EchoBot1.Dialogs
                 new WaterfallDialog(dialogId, new WaterfallStep[]
                     {
                         async (stepContext, ct) =>
-                        {                            
+                        {
                             await stepContext.Context.SendActivityAsync("[Adaptive Card Dialog] - Adaptive Card Test!");
 
                             Attachment attachment = new Attachment()
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\multiple-input-submit.json")
+                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\multiple-input-submit.json"),
                             };
 
                             var reply = stepContext.Context.Activity.CreateReply();
@@ -48,11 +50,26 @@ namespace EchoBot1.Dialogs
                                 ct
                             ).ConfigureAwait(false);
                         },
-                         async (stepContext, ct) =>
+                        async (stepContext, ct) =>
                         {
                             //https://stackoverflow.com/questions/53009106/adaptive-card-response-from-a-waterfallstep-dialog-ms-bot-framework-v4
                             var userAnswer = (string) stepContext.Result;
+
+                            var res = JObject.Parse(userAnswer);
+
                             await stepContext.Context.SendActivityAsync(userAnswer);
+
+                            CustomWrapperPromptState customWrapperPromptState = await _customWrapperPromptStatePropertyAccessor.GetAsync(
+                                stepContext.Context,
+                                () => new CustomWrapperPromptState() { Submitted = new Dictionary<string, string>() },
+                                ct);
+
+                            customWrapperPromptState.Submitted.TryAdd(res.GetValue("id").ToString(), stepContext.Context.Activity.Id);
+
+                            await _customWrapperPromptStatePropertyAccessor.SetAsync(
+                                stepContext.Context,
+                                customWrapperPromptState,
+                                ct);
 
                             return await stepContext.NextAsync().ConfigureAwait(false);
                         }

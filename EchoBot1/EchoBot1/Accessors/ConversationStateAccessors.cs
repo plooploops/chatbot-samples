@@ -59,5 +59,9 @@ namespace EchoBot1
         /// </summary>
         /// <value>The <see cref="ConversationState"/> object.</value>
         public ConversationState ConversationState { get; }
+
+        public IStatePropertyAccessor<CustomWrapperPromptState> CustomWrapperPromptState { get; set; }
+
+        public static string CustomWrapperPromptStateName { get; } = $"{nameof(ConversationStateAccessors)}.CustomWrapperPromptStateName";
     }
 }
