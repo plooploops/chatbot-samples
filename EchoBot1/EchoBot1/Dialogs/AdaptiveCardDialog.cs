@@ -35,7 +35,7 @@ namespace EchoBot1.Dialogs
                             Attachment attachment = new Attachment()
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\who-is.json"),
+                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\multiple-input-submit.json"),
                             };
 
                             var reply = stepContext.Context.Activity.CreateReply();
