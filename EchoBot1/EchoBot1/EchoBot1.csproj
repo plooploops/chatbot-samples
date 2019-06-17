@@ -34,6 +34,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MainMenuHelperDialogStrings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CardSelectHelperDialogStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CardSelectHelperDialogStrings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +56,10 @@
     <EmbeddedResource Update="Resources\MainMenuHelperDialogStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainMenuHelperDialogStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CardSelectHelperDialogStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CardSelectHelperDialogStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

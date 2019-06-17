@@ -16,7 +16,13 @@ namespace EchoBot1.Services
 
         public static AdaptiveCard GetAdaptiveCard(string json)
         {
+            //placeholder to update the submit action data id
+            if (json.Contains("{0}"))
+            {
+                json = json.Replace("{0}", Guid.NewGuid().ToString());
+            }
             var ret = AdaptiveCard.FromJson(json);
+
             return ret.Card;
         }
 

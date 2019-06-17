@@ -14,10 +14,10 @@ using EchoBot1.Prompts;
 
 namespace EchoBot1.Dialogs
 {
-    public class AdaptiveCardDialog : ComponentDialog
+    public class AltTextTestDialog : ComponentDialog
     {
         private string selectedDay { get; set; }
-        public AdaptiveCardDialog(string dialogId) : base(dialogId)
+        public AltTextTestDialog(string dialogId) : base(dialogId)
         {
             // ID of the child dialog that should be started anytime the component is started.
             this.InitialDialogId = dialogId;
