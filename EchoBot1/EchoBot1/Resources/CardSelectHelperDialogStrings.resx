@@ -121,7 +121,7 @@
     <value>choicePrompt</value>
   </data>
   <data name="Option1" xml:space="preserve">
-    <value>Adaptive Card</value>
+    <value>Multiple Input Submit</value>
   </data>
   <data name="Option2" xml:space="preserve">
     <value>Alt Text Test</value>

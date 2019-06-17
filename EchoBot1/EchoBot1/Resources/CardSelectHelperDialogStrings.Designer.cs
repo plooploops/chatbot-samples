@@ -70,7 +70,7 @@ namespace EchoBot1.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adaptive Card.
+        ///   Looks up a localized string similar to Multiple Input Submit.
         /// </summary>
         public static string Option1 {
             get {

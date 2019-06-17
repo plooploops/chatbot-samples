@@ -27,13 +27,13 @@ namespace EchoBot1.Dialogs
                 new WaterfallDialog(dialogId, new WaterfallStep[]
                     {
                         async (stepContext, ct) =>
-                        {                            
-                            await stepContext.Context.SendActivityAsync("[Adaptive Card Dialog] - Adaptive Card Test!");
+                        {
+                            await stepContext.Context.SendActivityAsync("[Multiple Input Dialog] - Multiple Input Test!");
 
                             Attachment attachment = new Attachment()
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\multiple-input-submit.json")
+                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\alt-text-test.json")
                             };
 
                             var reply = stepContext.Context.Activity.CreateReply();
