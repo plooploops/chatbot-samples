@@ -115,6 +115,15 @@ namespace EchoBot1.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTML to JSON.
+        /// </summary>
+        public static string Option6 {
+            get {
+                return ResourceManager.GetString("Option6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to [Main Menu Dialog] Which option would you like to try?.
         /// </summary>
         public static string Prompt {
