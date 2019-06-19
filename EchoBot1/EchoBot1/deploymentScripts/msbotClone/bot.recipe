@@ -5,13 +5,13 @@
       "type": "endpoint",
       "id": "90",
       "name": "development",
-      "url": "http://localhost:3978/api/messages"
+      "url": "http://localhost:3978/"
     },
     {
       "type": "endpoint",
       "id": "2",
       "name": "production",
-      "url": "https://your-bot-url.azurewebsites.net/api/messages"
+      "url": "http://localhost:3978/"
     },
     {
       "type": "abs",

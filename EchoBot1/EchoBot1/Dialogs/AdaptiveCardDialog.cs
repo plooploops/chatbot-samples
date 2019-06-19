@@ -11,11 +11,17 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using AdaptiveCards;
 using EchoBot1.Prompts;
+using Microsoft.Azure.EventHubs;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace EchoBot1.Dialogs
 {
     public class AdaptiveCardDialog : ComponentDialog
     {
+        private static EventHubClient eventHubClient;
+        private const string EventHubConnectionString = "Endpoint=sb://<yournamespace>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<yourkey>";
+        private const string EventHubName = "<yourhubname>";
         private string selectedDay { get; set; }
         public AdaptiveCardDialog(string dialogId) : base(dialogId)
         {
@@ -27,7 +33,7 @@ namespace EchoBot1.Dialogs
                 new WaterfallDialog(dialogId, new WaterfallStep[]
                     {
                         async (stepContext, ct) =>
-                        {                            
+                        {
                             await stepContext.Context.SendActivityAsync("[Adaptive Card Dialog] - Adaptive Card Test!");
 
                             Attachment attachment = new Attachment()
@@ -50,8 +56,24 @@ namespace EchoBot1.Dialogs
                         },
                          async (stepContext, ct) =>
                         {
+
+                             var connectionStringBuilder = new EventHubsConnectionStringBuilder(EventHubConnectionString)
+                             {
+                                EntityPath = EventHubName
+                             };
+                             eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
                             //https://stackoverflow.com/questions/53009106/adaptive-card-response-from-a-waterfallstep-dialog-ms-bot-framework-v4
                             var userAnswer = (string) stepContext.Result;
+                              try
+                              {
+                               Console.WriteLine($"Sending message: {userAnswer}");
+                               await eventHubClient.SendAsync(new EventData(Encoding.UTF8.GetBytes(userAnswer)));
+                               }
+                               catch (Exception exception)
+                               {
+                                Console.WriteLine($"{DateTime.Now} > Exception: {exception.Message}");
+                               }
+
                             await stepContext.Context.SendActivityAsync(userAnswer);
 
                             return await stepContext.NextAsync().ConfigureAwait(false);
