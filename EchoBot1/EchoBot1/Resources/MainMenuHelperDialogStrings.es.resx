@@ -135,6 +135,9 @@
   <data name="Option5" xml:space="preserve">
     <value>Elija Language</value>
   </data>
+  <data name="Option6" xml:space="preserve">
+    <value>HTML To JSON</value>
+  </data>
   <data name="Prompt" xml:space="preserve">
     <value>[Main Menu Helper Dialog] ¿Qué opción te gustaría probar?</value>
   </data>

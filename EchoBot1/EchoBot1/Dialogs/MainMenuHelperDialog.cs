@@ -26,7 +26,6 @@ namespace EchoBot1.Dialogs
             this._customWrapperPromptStatePropertyAccessor = customWrapperPromptStateAccessor;
             this.InitialDialogId = MainMenuHelperDialogId;
 
-            List<string> _mainMenuChoices = new List<string>() { "FAQ QnAMaker", "Azure Search", "Azure Search Facets", "Adaptive Card", "Choose Language" };
             ChoicePrompt cp = new ChoicePrompt("choicePrompt");
             cp.Style = ListStyle.SuggestedAction;
 
@@ -36,6 +35,7 @@ namespace EchoBot1.Dialogs
             this.AddDialog(new AzureSearchFacetsDialog("AzureSearchFacetsDialog"));
             this.AddDialog(new AdaptiveCardDialog("AdaptiveCardDialog", customWrapperPromptStateAccessor));
             this.AddDialog(new ChooseLanguageDialog("ChooseLanguageDialog", selectedLanguagePropertyAccessor));
+            this.AddDialog(new HTMLToJSONDialog("htmlToJsonDialog"));
 
             // Define the conversation flow using the waterfall model.
             this.AddDialog(
@@ -55,7 +55,7 @@ namespace EchoBot1.Dialogs
                                 "choicePrompt",
                                 new PromptOptions
                                 {
-                                    Choices = ChoiceFactory.ToChoices(new List<string> { MainMenuHelperDialogStrings.Option1, MainMenuHelperDialogStrings.Option2, MainMenuHelperDialogStrings.Option3, MainMenuHelperDialogStrings.Option4, MainMenuHelperDialogStrings.Option5 }),
+                                    Choices = ChoiceFactory.ToChoices(new List<string> { MainMenuHelperDialogStrings.Option1, MainMenuHelperDialogStrings.Option2, MainMenuHelperDialogStrings.Option3, MainMenuHelperDialogStrings.Option4, MainMenuHelperDialogStrings.Option5, MainMenuHelperDialogStrings.Option6 }),
                                     Prompt = MessageFactory.Text(MainMenuHelperDialogStrings.Prompt),
                                     RetryPrompt = MessageFactory.Text(MainMenuHelperDialogStrings.RetryPrompt)
                                 },
@@ -93,6 +93,10 @@ namespace EchoBot1.Dialogs
                             else if (menuChoice == MainMenuHelperDialogStrings.Option5)
                             {
                                 return await stepContext.BeginDialogAsync("ChooseLanguageDialog");
+                            }
+                            else if (menuChoice == MainMenuHelperDialogStrings.Option6)
+                            {
+                                return await stepContext.BeginDialogAsync("htmlToJsonDialog");
                             }
                             else
                             {

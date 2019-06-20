@@ -135,6 +135,9 @@
   <data name="Option5" xml:space="preserve">
     <value>Choose Language</value>
   </data>
+  <data name="Option6" xml:space="preserve">
+    <value>HTML to JSON</value>
+  </data>
   <data name="Prompt" xml:space="preserve">
     <value>[Main Menu Dialog] Which option would you like to try?</value>
   </data>

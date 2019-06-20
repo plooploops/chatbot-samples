@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using AdaptiveCards;
 using EchoBot1.Prompts;
+using EchoBot1.Helper;
 
 namespace EchoBot1.Dialogs
 {
