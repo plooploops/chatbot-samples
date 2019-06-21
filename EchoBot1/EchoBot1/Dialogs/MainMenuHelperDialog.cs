@@ -16,12 +16,14 @@ namespace EchoBot1.Dialogs
     public class MainMenuHelperDialog : ComponentDialog
     {
         private readonly IStatePropertyAccessor<SelectedLanguageState> _selectedLanguageStatePropertyAccessor;
+        private readonly IStatePropertyAccessor<CustomWrapperPromptState> _customWrapperPromptStatePropertyAccessor;
 
         public static readonly string MainMenuHelperDialogId = "mainMenuHelperDialog";
 
-        public MainMenuHelperDialog(IStatePropertyAccessor<SelectedLanguageState> selectedLanguagePropertyAccessor) : base(MainMenuHelperDialogId)
+        public MainMenuHelperDialog(IStatePropertyAccessor<SelectedLanguageState> selectedLanguagePropertyAccessor, IStatePropertyAccessor<CustomWrapperPromptState> customWrapperPromptStateAccessor) : base(MainMenuHelperDialogId)
         {
             this._selectedLanguageStatePropertyAccessor = selectedLanguagePropertyAccessor;
+            this._customWrapperPromptStatePropertyAccessor = customWrapperPromptStateAccessor;
             this.InitialDialogId = MainMenuHelperDialogId;
 
             ChoicePrompt cp = new ChoicePrompt("choicePrompt");
@@ -31,7 +33,7 @@ namespace EchoBot1.Dialogs
             this.AddDialog(new QnAMakerDialog("QnADialog"));
             this.AddDialog(new AzureSearchDialog("AzureSearchDialog", selectedLanguagePropertyAccessor));
             this.AddDialog(new AzureSearchFacetsDialog("AzureSearchFacetsDialog"));
-            this.AddDialog(new CardSelectHelperDialog("CardSelectHelperDialog", _selectedLanguageStatePropertyAccessor));
+            this.AddDialog(new CardSelectHelperDialog("CardSelectHelperDialog", _selectedLanguageStatePropertyAccessor, customWrapperPromptStateAccessor));
             this.AddDialog(new ChooseLanguageDialog("ChooseLanguageDialog", selectedLanguagePropertyAccessor));
             this.AddDialog(new HTMLToJSONDialog("htmlToJsonDialog"));
 
