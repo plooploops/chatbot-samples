@@ -1,0 +1,125 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "workflows_chat_file_xfer_name": {
+            "defaultValue": "chat-file-xfer",
+            "type": "String"
+        },
+        "sites_json2csv1_externalid": {
+            "defaultValue": "/subscriptions/2201d2bc-410b-4fca-87db-1f7354844778/resourceGroups/mmcchatfile/providers/Microsoft.Web/sites/json2csv1",
+            "type": "String"
+        },
+        "connections_azurefile_externalid": {
+            "defaultValue": "/subscriptions/2201d2bc-410b-4fca-87db-1f7354844778/resourceGroups/mmcchatfile/providers/Microsoft.Web/connections/azurefile",
+            "type": "String"
+        },
+        "connections_eventhubs_1_externalid": {
+            "defaultValue": "/subscriptions/2201d2bc-410b-4fca-87db-1f7354844778/resourceGroups/mmcchatfile/providers/Microsoft.Web/connections/eventhubs-1",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Logic/workflows",
+            "apiVersion": "2017-07-01",
+            "name": "[parameters('workflows_chat_file_xfer_name')]",
+            "location": "eastus",
+            "properties": {
+                "state": "Enabled",
+                "definition": {
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "$connections": {
+                            "defaultValue": {},
+                            "type": "Object"
+                        }
+                    },
+                    "triggers": {
+                        "When_events_are_available_in_Event_Hub": {
+                            "recurrence": {
+                                "frequency": "Second",
+                                "interval": 1
+                            },
+                            "splitOn": "@triggerBody()",
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['eventhubs_1']['connectionId']"
+                                    }
+                                },
+                                "method": "get",
+                                "path": "/@{encodeURIComponent('sharefilehub')}/events/batch/head",
+                                "queries": {
+                                    "consumerGroupName": "$Default",
+                                    "contentType": "application/octet-stream",
+                                    "maximumEventsCount": 50
+                                }
+                            }
+                        }
+                    },
+                    "actions": {
+                        "Create_file": {
+                            "runAfter": {
+                                "Function1": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "ApiConnection",
+                            "inputs": {
+                                "body": "@body('Function1')",
+                                "host": {
+                                    "connection": {
+                                        "name": "@parameters('$connections')['azurefile']['connectionId']"
+                                    }
+                                },
+                                "method": "post",
+                                "path": "/datasets/default/files",
+                                "queries": {
+                                    "folderPath": "/mmcg/filexfer",
+                                    "name": "@{concat(guid(),'.csv')}",
+                                    "queryParametersSingleEncoded": true
+                                }
+                            },
+                            "runtimeConfiguration": {
+                                "contentTransfer": {
+                                    "transferMode": "Chunked"
+                                }
+                            }
+                        },
+                        "Function1": {
+                            "runAfter": {},
+                            "type": "Function",
+                            "inputs": {
+                                "body": "@triggerBody()?['ContentData']",
+                                "function": {
+                                    "id": "[concat(parameters('sites_json2csv1_externalid'), '/functions/Function1')]"
+                                }
+                            }
+                        }
+                    },
+                    "outputs": {}
+                },
+                "parameters": {
+                    "$connections": {
+                        "value": {
+                            "azurefile": {
+                                "connectionId": "[parameters('connections_azurefile_externalid')]",
+                                "connectionName": "azurefile",
+                                "id": "/subscriptions/2201d2bc-410b-4fca-87db-1f7354844778/providers/Microsoft.Web/locations/eastus/managedApis/azurefile"
+                            },
+                            "eventhubs_1": {
+                                "connectionId": "[parameters('connections_eventhubs_1_externalid')]",
+                                "connectionName": "eventhubs-1",
+                                "id": "/subscriptions/2201d2bc-410b-4fca-87db-1f7354844778/providers/Microsoft.Web/locations/eastus/managedApis/eventhubs"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
