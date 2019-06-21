@@ -18,12 +18,14 @@ namespace EchoBot1.Dialogs
     public class CardSelectHelperDialog : ComponentDialog
     {
         private readonly IStatePropertyAccessor<SelectedLanguageState> _selectedLanguageStatePropertyAccessor;
-
+        private readonly IStatePropertyAccessor<CustomWrapperPromptState> _customWrapperPromptStatePropertyAccessor;
         public static readonly string CardSelectHelperDialogId = "cardSelectHelperDialog";
 
         public CardSelectHelperDialog(string dialogId,
-            IStatePropertyAccessor<SelectedLanguageState> selectedLanguagePropertyAccessor) : base(dialogId)
+            IStatePropertyAccessor<SelectedLanguageState> selectedLanguagePropertyAccessor,
+            IStatePropertyAccessor<CustomWrapperPromptState> customWrapperPromptStateAccessor) : base(dialogId)
         {
+            this._customWrapperPromptStatePropertyAccessor = customWrapperPromptStateAccessor;
             this._selectedLanguageStatePropertyAccessor = selectedLanguagePropertyAccessor;
             // ID of the child dialog that should be started anytime the component is started.
             this.InitialDialogId = dialogId;
@@ -32,7 +34,7 @@ namespace EchoBot1.Dialogs
             cp.Style = ListStyle.SuggestedAction;
 
             this.AddDialog(cp);
-            this.AddDialog(new AdaptiveCardDialog("AdaptiveCardDialog"));
+            this.AddDialog(new AdaptiveCardDialog("AdaptiveCardDialog", customWrapperPromptStateAccessor));
             this.AddDialog(new AltTextTestDialog("AltTextTestDialog"));
 
             // Define the conversation flow using the waterfall model.
@@ -89,7 +91,7 @@ namespace EchoBot1.Dialogs
                         },
                         async (stepContext, ct) =>
                         {
-                           return await stepContext.ReplaceDialogAsync(CardSelectHelperDialogId).ConfigureAwait(false);
+                            return await stepContext.NextAsync().ConfigureAwait(false);
                         }
                     }
                 )

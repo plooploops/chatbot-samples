@@ -152,8 +152,8 @@ namespace EchoBot1
 
                 conversationStateAccessor.CounterState = conversationState.CreateProperty<CounterState>(ConversationStateAccessors.CounterStateName);
                 conversationStateAccessor.SelectedLanguage = conversationState.CreateProperty<SelectedLanguageState>(ConversationStateAccessors.SelectedLanguageName);
-
-                dialogSet.Add(new MainMenuHelperDialog(conversationStateAccessor.SelectedLanguage));
+                conversationStateAccessor.CustomWrapperPromptState = conversationState.CreateProperty<CustomWrapperPromptState>(ConversationStateAccessors.CustomWrapperPromptStateName);
+                dialogSet.Add(new MainMenuHelperDialog(conversationStateAccessor.SelectedLanguage, conversationStateAccessor.CustomWrapperPromptState));
 
                 return dialogSet;
             });
