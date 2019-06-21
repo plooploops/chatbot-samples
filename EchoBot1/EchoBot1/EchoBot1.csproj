@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>817672b2-4ca1-45c4-8bdb-5c99ff7e37c8</UserSecretsId>
+    <UserSecretsId>00cf29d4-df4b-40aa-8ec5-3562983be1e3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +13,7 @@
     <PackageReference Include="AdaptiveCards" Version="1.1.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.7" />
     <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.Azure.EventHubs" Version="3.0.0" />
     <PackageReference Include="Microsoft.Azure.Search" Version="5.0.3" />
     <PackageReference Include="Microsoft.Bot.Builder" Version="4.2.2" />
     <PackageReference Include="Microsoft.Bot.Builder.Dialogs" Version="4.2.2" />
@@ -36,6 +37,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>MainMenuHelperDialogStrings.resx</DependentUpon>
     </Compile>
+    <Compile Update="Resources\CardSelectHelperDialogStrings.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>CardSelectHelperDialogStrings.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +59,10 @@
     <EmbeddedResource Update="Resources\MainMenuHelperDialogStrings.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MainMenuHelperDialogStrings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\CardSelectHelperDialogStrings.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CardSelectHelperDialogStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 </Project>

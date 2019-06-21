@@ -11,20 +11,13 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using AdaptiveCards;
 using EchoBot1.Prompts;
-using Microsoft.Azure.EventHubs;
-using System.Text;
-using System.Threading.Tasks;
-using EchoBot1.Helper;
 
 namespace EchoBot1.Dialogs
 {
-    public class AdaptiveCardDialog : ComponentDialog
+    public class AltTextTestDialog : ComponentDialog
     {
-        private static EventHubClient eventHubClient;
-        private const string EventHubConnectionString = "Endpoint=sb://<yournamespace>.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=<yourkey>";
-        private const string EventHubName = "<yourhubname>";
         private string selectedDay { get; set; }
-        public AdaptiveCardDialog(string dialogId) : base(dialogId)
+        public AltTextTestDialog(string dialogId) : base(dialogId)
         {
             // ID of the child dialog that should be started anytime the component is started.
             this.InitialDialogId = dialogId;
@@ -35,12 +28,12 @@ namespace EchoBot1.Dialogs
                     {
                         async (stepContext, ct) =>
                         {
-                            await stepContext.Context.SendActivityAsync("[Adaptive Card Dialog] - Adaptive Card Test!");
+                            await stepContext.Context.SendActivityAsync("[Multiple Input Dialog] - Multiple Input Test!");
 
                             Attachment attachment = new Attachment()
                             {
                                 ContentType = AdaptiveCard.ContentType,
-                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\multiple-input-submit.json")
+                                Content = await AdaptiveCardService.GetAdaptiveCardByFileName(@".\Cards\alt-text-test.json")
                             };
 
                             var reply = stepContext.Context.Activity.CreateReply();
@@ -57,24 +50,8 @@ namespace EchoBot1.Dialogs
                         },
                          async (stepContext, ct) =>
                         {
-
-                             var connectionStringBuilder = new EventHubsConnectionStringBuilder(EventHubConnectionString)
-                             {
-                                EntityPath = EventHubName
-                             };
-                             eventHubClient = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString());
                             //https://stackoverflow.com/questions/53009106/adaptive-card-response-from-a-waterfallstep-dialog-ms-bot-framework-v4
                             var userAnswer = (string) stepContext.Result;
-                              try
-                              {
-                               Console.WriteLine($"Sending message: {userAnswer}");
-                               await eventHubClient.SendAsync(new EventData(Encoding.UTF8.GetBytes(userAnswer)));
-                               }
-                               catch (Exception exception)
-                               {
-                                Console.WriteLine($"{DateTime.Now} > Exception: {exception.Message}");
-                               }
-
                             await stepContext.Context.SendActivityAsync(userAnswer);
 
                             return await stepContext.NextAsync().ConfigureAwait(false);
