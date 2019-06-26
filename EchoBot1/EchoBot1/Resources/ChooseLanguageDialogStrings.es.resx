@@ -130,7 +130,7 @@
     <value>[Choose Language Dialog] ¿Qué idioma preferirías para la comunicación?</value>
   </data>
   <data name="RetryPrompt" xml:space="preserve">
-    <value>Por favor, seleccione un idioma para la comunicación.</value>
+    <value>Por favor, selecciona un idioma para la comunicación.</value>
   </data>
   <data name="Step2" xml:space="preserve">
     <value>Según lo que me has contado, seleccionaste Español</value>

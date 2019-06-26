@@ -133,7 +133,7 @@
     <value>Tarjeta adaptable</value>
   </data>
   <data name="Option5" xml:space="preserve">
-    <value>Elija Language</value>
+    <value>Selecciona idioma</value>
   </data>
   <data name="Option6" xml:space="preserve">
     <value>HTML To JSON</value>
@@ -142,6 +142,6 @@
     <value>[Main Menu Helper Dialog] ¿Qué opción te gustaría probar?</value>
   </data>
   <data name="RetryPrompt" xml:space="preserve">
-    <value>Por favor, seleccione una opción para intentarlo.</value>
+    <value>Por favor, selecciona una opción para intentarlo.</value>
   </data>
 </root>

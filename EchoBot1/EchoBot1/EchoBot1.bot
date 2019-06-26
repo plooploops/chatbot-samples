@@ -1,23 +1,26 @@
 {
-  "name": "EchoBot1",
-  "services": [
-    {
-      "type": "endpoint",
-      "name": "development",
-      "endpoint": "http://localhost:3978/",
-      "appId": "",
-      "appPassword": "",
-      "id": "1"
-    },
-    {
-      "type": "endpoint",
-      "name": "production",
-      "endpoint": "http://localhost:3978/",
-      "appId": "",
-      "appPassword": "",
-      "id": "2"
-    }
-  ],
-  "padlock": "",
-  "version": "2.0"
+    "name": "EchoBot1",
+    "description": "",
+    "services": [
+        {
+            "type": "endpoint",
+            "name": "development",
+            "endpoint": "http://localhost:3978/api/messages",
+            "appId": "49086618-ebb0-4430-8f94-f3fd205e80ad",
+            "appPassword": "@yr^fZ)me2%hO)^6SuH%[s{cGNO",
+            "id": "1"
+        },
+        {
+            "type": "endpoint",
+            "name": "production",
+            "endpoint": "http://localhost:3978/",
+            "appId": "",
+            "appPassword": "",
+            "id": "2"
+        }
+    ],
+    "padlock": "",
+    "version": "2.0",
+    "path": "C:\\Users\\angee\\source\\repos\\chatbot-samples\\EchoBot1\\EchoBot1\\EchoBot1.bot",
+    "overrides": null
 }

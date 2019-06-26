@@ -22,13 +22,32 @@ namespace EchoBot1.Dialogs
         {
             // ID of the child dialog that should be started anytime the component is started.
             this.InitialDialogId = dialogId;
+
+            this.AddDialog(new NumberPrompt<int>("numberPrompt"));
+
             // Define the conversation flow using the waterfall model.
             this.AddDialog(
                 new WaterfallDialog(dialogId, new WaterfallStep[]
                     {
                         async (stepContext, ct) =>
                         {
-                            string json = HTMLHelper.TestHTML();
+                            return await stepContext.PromptAsync(
+                                "numberPrompt",
+                                new PromptOptions
+                                {
+                                    Prompt = MessageFactory.Text("[HTML to JSON Dialog] How many tables would you like to skip?"),
+                                },
+                                ct
+                            ).ConfigureAwait(false);
+                        },
+                        async (stepContext, ct) =>
+                        {
+                            var userAnswer = (int) stepContext.Result;
+
+                            if (userAnswer < 0)
+                                userAnswer = 0;
+
+                            string json = HTMLHelper.TestHTML(userAnswer);
 
                             await stepContext.Context.SendActivityAsync(json);
 
