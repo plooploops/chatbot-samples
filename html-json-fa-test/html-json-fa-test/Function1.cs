@@ -30,7 +30,7 @@ namespace html_json_fa_test
 
             return jsonLinesContent != null
                 ? (ActionResult)new OkObjectResult($"{jsonLinesContent}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+                : new BadRequestObjectResult("Please pass HTML in the request body for parsing.");
         }
 
         public static string TestHTML(string html, int skipCount = 0)
