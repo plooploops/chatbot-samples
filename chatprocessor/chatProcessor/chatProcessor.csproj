@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\cosmosDbConnection\cosmosDbConnection.csproj" />
-    <ProjectReference Include="..\textAnalyticsTest\textAnalytics.csproj" />
+    <ProjectReference Include="..\textAnalytics\textAnalytics.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

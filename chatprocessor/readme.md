@@ -44,6 +44,8 @@ For local development, follow the [instructions](https://github.com/jasonshave/C
 
 1. [Create a new Azure Event Hub](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-create). This will give you a namespace and hub name. Obtain your `EventHubConnectionString` and `EventHubName` from this configuration.
 
+   a. Update the `ProcessChatMessage.cs` function call with the hub name.
+
 2. [Create a Cognitive Services account](https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/quickstarts/csharp) and obtain your `CognitiveServicesSubscriptionKey` and `CognitiveServicesEndpoint` URI.
 
 3. [Create a Cosmos DB account and collection](https://docs.microsoft.com/en-us/azure/cosmos-db/sql-api-dotnetcore-get-started) to obtain the following values:
