@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.29" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\cosmosDbTest\cosmosDbConnection.csproj" />
+    <ProjectReference Include="..\cosmosDbConnection\cosmosDbConnection.csproj" />
     <ProjectReference Include="..\textAnalyticsTest\textAnalytics.csproj" />
   </ItemGroup>
   <ItemGroup>

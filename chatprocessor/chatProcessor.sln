@@ -5,9 +5,9 @@ VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "chatProcessor", "chatProcessor\chatProcessor.csproj", "{764017BA-85D8-4648-A355-25D5087AE5B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "textAnalytics", "textAnalyticsTest\textAnalytics.csproj", "{9AFEE80B-29A3-46AD-94D5-1A5A8F103EE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "textAnalytics", "textAnalytics\textAnalytics.csproj", "{9AFEE80B-29A3-46AD-94D5-1A5A8F103EE1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cosmosDbConnection", "cosmosDbTest\cosmosDbConnection.csproj", "{F8358749-F276-432A-9F14-7AEBD0BA487E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "cosmosDbConnection", "cosmosDbConnection\cosmosDbConnection.csproj", "{F8358749-F276-432A-9F14-7AEBD0BA487E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eventHubTest", "eventHubTest\eventHubTest.csproj", "{CD929A2C-893C-4510-935A-9B72B4D207FF}"
 EndProject

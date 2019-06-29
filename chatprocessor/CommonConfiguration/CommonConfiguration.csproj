@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
-    <UserSecretsId>3deac28a-effe-4f96-86fd-a47486f97a37</UserSecretsId>
+    <UserSecretsId>CREATE_GUID_AND_PLACE_HERE</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

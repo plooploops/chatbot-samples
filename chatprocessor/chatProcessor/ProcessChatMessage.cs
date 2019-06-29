@@ -26,7 +26,7 @@ namespace chatProcessor
         }
 
         [FunctionName("ProcessChatMessage")]
-        public async Task ProcessChatMessageAsync([EventHubTrigger("mmcchatbot", Connection = "EventHubConnectionAppSetting")] EventData[] events, ILogger log)
+        public async Task ProcessChatMessageAsync([EventHubTrigger("[insert]", Connection = "EventHubConnectionAppSetting")] EventData[] events, ILogger log)
         {
             var exceptions = new List<Exception>();
 
